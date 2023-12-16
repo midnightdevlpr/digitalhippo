@@ -22,7 +22,7 @@ const {
   });
 
   const {data} = trpc.anyApiRoute.useQuery()
-  console.log(data)
+  // console.log(data)
 
   const onSubmit = ({email,password}: TAuthCredentialsValidator) => {
     //Send data to the server
@@ -48,7 +48,7 @@ const {
           </div>
 
           <div className="grid gap-6">
-            <form onSubmit={handleSubmit(onsubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2">
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="email">Email</Label>
