@@ -44,7 +44,7 @@ export const getPayloadClient =async ({initOptions} :Args = {}):Promise<Payload>
         cached.promise = payload.init({
             email: {
                 transport: transporter,
-                fromAddress:"onboarding@resend.com",
+                fromAddress:"onboarding@resend.dev",
                 fromName:"DigitalHippo"
 
             },
