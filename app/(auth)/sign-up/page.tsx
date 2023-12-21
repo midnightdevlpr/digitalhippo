@@ -14,6 +14,9 @@ import {
   TAuthCredentialsValidator,
 } from "@/lib/validators/account-credentials-validator";
 import { trpc } from "@/trpc/client";
+import { toast } from "sonner";
+import { ZodError } from "zod";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const {
@@ -24,7 +27,30 @@ const Page = () => {
     resolver: zodResolver(AuthCredentialValidator),
   });
 
-  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({});
+  const router = useRouter();
+
+  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
+    onError: (err) => {
+      if (err.data?.code === "CONFLICT") {
+        toast.error("This Email is already is use.Sign in instead");
+
+        return;
+      }
+
+      if (err instanceof ZodError) {
+        toast.error(err.issues[0].message);
+
+        return;
+      }
+
+      toast.error("Something went wrong please try again");
+    },
+
+    onSuccess: ({ sentToEmail }) => {
+      toast.success(`Verification email sent to ${sentToEmail}.`);
+      router.push("/verify-email?to=" + sentToEmail);
+    },
+  });
 
   const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
     mutate({ email, password });
@@ -61,6 +87,11 @@ const Page = () => {
                     })}
                     placeholder="you@example.com"
                   />
+                  {errors?.email && (
+                    <p className="text-sm text-red-500">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="grid gap-2">
@@ -74,6 +105,11 @@ const Page = () => {
                     })}
                     placeholder="password"
                   />
+                  {errors?.password && (
+                    <p className="text-sm text-red-500">
+                      {errors.password.message}
+                    </p>
+                  )}
                 </div>
 
                 <Button>Sign Up</Button>
