@@ -7,6 +7,7 @@ import { Span } from "next/dist/trace";
 import Cart from "./Cart";
 import { getServerSideUser } from "@/lib/payload-utils";
 import {cookies} from "next/headers"
+import UserAccountNav from "./UserAccountNav";
 
 
 const Navbar = async() => {
@@ -50,7 +51,7 @@ const Navbar = async() => {
                   )}
 
                   {user ? (
-                    <p></p>
+                    <UserAccountNav user={user} />
                   ) : (
                     <Link
                       href="/sign-up"
