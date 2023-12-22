@@ -57,7 +57,7 @@ const Page = () => {
     },
 
     onSuccess: () => {
-      toast.success("signe in successfully");
+      toast.success("signed in successfully");
 
       router.refresh();
 
