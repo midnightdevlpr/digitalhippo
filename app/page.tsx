@@ -46,8 +46,11 @@ export default function Home() {
           </div>
         </div>
 
-        <ProductReel href="/products" title="Brand New"/>
-
+        <ProductReel
+          query={{ sort: "desc", limit: 4 }}
+          href="/products"
+          title="Brand New"
+        />
       </MaxWidthWrapper>
 
       <section className="border-t border-gray-200 bg-gray-50">
@@ -67,14 +70,14 @@ export default function Home() {
                 <div className="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
                   <h3 className="text-base font-medium text-gray-900">
                     {perk.name}
-                  </h3> 
+                  </h3>
                   <p className="mt-3 text-sm text-muted-foreground">
                     {perk.description}
                   </p>
                 </div>
               </div>
             ))}
-          </div> 
+          </div>
         </MaxWidthWrapper>
       </section>
     </>
