@@ -1,3 +1,4 @@
+import { type } from "os";
 import { User } from "../payload-types";
 import { BeforeChangeHook } from "payload/dist/collections/config/types";
 import { Access, CollectionConfig } from "payload/types";
@@ -30,32 +31,52 @@ const yourOwnAndPurchased: Access = async({req}) => {
 
     const {docs:orders} = await req.payload.find({
         collection: "orders",
-        depth:0,
+        depth:2,
         where:{
             user:{
                 equals:user.id
-            }
+            },
 
-        }
+        },
     })
 
+    const purchasedProductsFields = orders.map((order)=>{
+       return order.products.map((product)=>{
+            if(typeof product === "string") return req.payload.logger.error(
+                'Search depth not sufficient to find purchased file IDs'
+            )
+
+            return typeof product.product_files === "string" 
+            ? product.product_files 
+            : product.product_files.id
+       })  
+    }).filter(Boolean)
+      .flat()
+
+      return {
+        id:{
+            in:[...ownProductFields,...purchasedProductsFields]
+        }
+      }
 }
 
 export const ProductFiles: CollectionConfig = {
     slug: "product_files",
     admin:{
-        hidden:({user}) => user.role !== 'admin',
+        hidden:({user}) => user.role !== 'Admin',
     },
     hooks:{
         beforeChange:[addUser]
     },
     access:{
         read: yourOwnAndPurchased,
+        update: ({req}) => req.user.role ==="Admin",
+        delete: ({req}) => req.user.role ==="Admin"
     },
     upload:{
         staticURL: "/product_files",
         staticDir: "product_files",
-        mimeTypes: ["umage/*","font/*","application/postcript"]
+        mimeTypes: ["image/*","font/*","application/postcript"]
     },
     fields:[
     {
