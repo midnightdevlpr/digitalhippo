@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { authRouter } from "./auth-router";
 import { publicProcedure, router } from "./trpc";
-import { QueryValidator } from "@/lib/validators/query-validator";
+import { QueryValidator } from "../lib/validators/query-validator";
 import { getPayloadClient } from "../get-payload";
 
 export const appRouter = router({
     auth: authRouter,
 
-    getInfiniteProducts:publicProcedure.input(z.object({
+    getInfiniteProducts: publicProcedure.input(z.object({
         limit: z.number().min(1).max(150),
         cursor: z.number().nullish(),
         query:QueryValidator
