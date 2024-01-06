@@ -32,7 +32,7 @@ const ProductListing = ({ product, index }: ProductListingProps) => {
     .map(({ image }) => (typeof image === "string" ? image : image.url))
     .filter(Boolean) as string[];
 
-  if (isVisible && product) {
+   if (isVisible && product) {
     return (
       <Link
         className={cn("invisible h-full w-full cursor-pointer group/main", {
