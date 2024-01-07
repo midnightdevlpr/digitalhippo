@@ -33,7 +33,7 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
     return (
       <div className="flex h-full flex-col items-center">
         <div className="relative mb-4 h-60 w-60 text-muted-foreground">
-          <Image src="/hippo-email-sent.png" fill alt="Email sent" />
+          <Image src="/hippo-email-sent.png" fill  alt="Email sent" />
         </div>
         <h3 className="font-semibold text-2xl">You&apos;re all set!</h3>
         <p className="text-muted-foreground text-center mt-1">
@@ -51,13 +51,11 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
     );
   }
 
-  if(isLoading){
+  if (isLoading) {
     return (
       <div className="flex flex-col items-center gap-2">
         <Loader2 className="animate-spin h-8 w-8 text-zinc-300" />
-        <h3 className="font-semibold text-xl">
-          verifying....
-        </h3>
+        <h3 className="font-semibold text-xl">verifying....</h3>
         <p className="text-muted-foreground text-sm">
           This won&apos;t take long
         </p>
