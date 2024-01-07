@@ -14,9 +14,18 @@ import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Image from "next/image";
+import { useCart } from "@/hooks/use-cart";
 
 const Cart = () => {
-  const itemCount = 0;
+  const { items } = useCart();
+
+  const itemCount = items.length;
+
+  const cartTotal = items.reduce(
+    (total, { product }) => total + product.price,
+    0
+  );
+
   const fee = 1;
 
   return (
@@ -37,8 +46,9 @@ const Cart = () => {
         {itemCount > 0 ? (
           <>
             <div className="flex w-full flex-col pr-6">
-              {/* TODO:: Cart Logic */}
-              Cart Items
+              {items.map(({product}) => (
+                <CartItem key={product.id}/>
+              ))}
             </div>
             <div className="space-y-4 pr-6">
               <Separator />
@@ -54,7 +64,7 @@ const Cart = () => {
                 </div>
                 <div className="flex">
                   <span className="flex-1">Total</span>
-                  <span>{formatPrice(fee)}</span>
+                  <span>{formatPrice(cartTotal + fee)}</span>
                 </div>
               </div>
 
@@ -74,20 +84,28 @@ const Cart = () => {
           </>
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
-            <div aria-hidden="true" className="relative mb-4 h-60 w-60 text-muted-foreground">
+            <div
+              aria-hidden="true"
+              className="relative mb-4 h-60 w-60 text-muted-foreground"
+            >
               <Image
-                src='/hippo-empty-cart.png'
+                src="/hippo-empty-cart.png"
                 fill
                 alt="empty shopping cart image"
               />
             </div>
             <div className="text-xl font-semibold">Your Cart Is Empty</div>
             <SheetTrigger asChild>
-                <Link href='/products' className={buttonVariants({
-                    variant: "link",
-                    size:'sm',
-                    className:'text-sm text-muted-foreground',
-                })}>Add items to your cart to checkout</Link>
+              <Link
+                href="/products"
+                className={buttonVariants({
+                  variant: "link",
+                  size: "sm",
+                  className: "text-sm text-muted-foreground",
+                })}
+              >
+                Add items to your cart to checkout
+              </Link>
             </SheetTrigger>
           </div>
         )}
