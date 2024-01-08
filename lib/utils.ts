@@ -9,17 +9,18 @@ export function formatPrice(
   price: number | string,
   options: {
     currency?: "KES" | "USD" | "EUR" | "GBP" |"BDT",
-    notation?: Intl.NumberFormatOptions["notation"]
+    // notation?: Intl.NumberFormatOptions["notation"]
   } = {}
 ) {
-    const {currency = "KES", notation = "compact"} = options
+    // const {currency = "KES", notation = "compact"} = options
+    const {currency = "KES"} = options
 
     const numericPrice = typeof price === "string" ? parseFloat(price) : price
 
     return new Intl.NumberFormat("en-US",{
       style: "currency",
       currency,
-      notation,
+      // notation,
       maximumFractionDigits: 2
     }).format(numericPrice)
   }

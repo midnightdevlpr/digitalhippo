@@ -2,7 +2,7 @@ import AddToCartButton from "@/components/AddToCartButton";
 import ImageSlider from "@/components/ImageSlider";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductReel from "@/components/ProductReel";
-import { PRODUCT_CATEGORIES } from "@/config/Index";
+import { PRODUCT_CATEGORIES } from "@/config";
 import { getPayloadClient } from "@/get-payload";
 import { formatPrice } from "@/lib/utils";
 import { Check, Shield } from "lucide-react";
@@ -15,7 +15,7 @@ interface PageProps {
   };
 }
 
-const BREADCRUMPS = [
+const BREADCRUMBS = [
   { id: 1, name: "Home", href: "/" },
   { id: 2, name: "Products", href: "/products" },
 ];
@@ -53,20 +53,20 @@ const Page = async ({ params }: PageProps) => {
   return (
     <MaxWidthWrapper className="bg-white">
       <div className="bg-white">
-        <div className="max-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:grid-cols-2 lg:max-w-7xl lg:gap-x-8 lg:px-8">
-          {/* Product details */}
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+          {/* Product Details */}
           <div className="lg:max-w-lg lg:self-end">
             <ol className="flex items-center space-x-2">
-              {BREADCRUMPS.map((breadcrumb, i) => (
+              {BREADCRUMBS.map((breadcrumb, i) => (
                 <li key={breadcrumb.href}>
                   <div className="flex items-center text-sm">
                     <Link
-                      className="font text-sm text-muted-foreground hover:text-gray-900"
                       href={breadcrumb.href}
+                      className="font-medium text-sm text-muted-foreground hover:text-gray-900"
                     >
                       {breadcrumb.name}
                     </Link>
-                    {i !== BREADCRUMPS.length - 1 ? (
+                    {i !== BREADCRUMBS.length - 1 ? (
                       <svg
                         viewBox="0 0 20 20"
                         fill="currentColor"
@@ -80,15 +80,16 @@ const Page = async ({ params }: PageProps) => {
                 </li>
               ))}
             </ol>
+
             <div className="mt-4">
-              <h1 className="text-3xl front-bold tracking-tight sm:text-4xl text-gray-900">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {product.name}
               </h1>
             </div>
 
             <section className="mt-4">
               <div className="flex items-center">
-                <p className="font medium text-gray-900">
+                <p className="font-medium text-gray-900">
                   {formatPrice(product.price)}
                 </p>
 
@@ -96,11 +97,13 @@ const Page = async ({ params }: PageProps) => {
                   {label}
                 </div>
               </div>
+
               <div className="mt-4 space-y-6">
                 <p className="text-base text-muted-foreground">
                   {product.description}
                 </p>
               </div>
+
               <div className="mt-6 flex items-center">
                 <Check
                   aria-hidden="true"
@@ -112,43 +115,41 @@ const Page = async ({ params }: PageProps) => {
               </div>
             </section>
           </div>
-        </div>
 
-        {/* Product images */}
-        <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
-          <div className="aspect-square rounded-lg">
-            <ImageSlider urls={validUrls} />
-          </div>
-        </div>
-
-        {/* add to cart */}
-        <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
-          <div>
-            <div className="mt-10">
-              <AddToCartButton product={product}/>
+          {/* Product images */}
+          <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
+            <div className="aspect-square rounded-lg">
+              <ImageSlider urls={validUrls} />
             </div>
-            <div className="mt-6 text-center">
-              <div className="group inline-flex text-sm text-medium">
-                <Shield
-                  aria-hidden="true"
-                  className="mr-2 h-5 w-5 flex shrink-0 text-gray-400"
-                />
-                <span className="text-muted-foreground hover:text-gray-700">
-                  30 day return guarantee
-                </span>
+          </div>
+
+          {/* add to cart part */}
+          <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
+            <div>
+              <div className="mt-10">
+                <AddToCartButton product={product} />
+              </div>
+              <div className="mt-6 text-center">
+                <div className="group inline-flex text-sm text-medium">
+                  <Shield
+                    aria-hidden="true"
+                    className="mr-2 h-5 w-5 flex-shrink-0 text-gray-400"
+                  />
+                  <span className="text-muted-foreground hover:text-gray-700">
+                    30 Day Return Guarantee
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* show similar products */}
-
       <ProductReel
         href="/products"
         query={{ category: product.category, limit: 4 }}
-        title={`similar ${label}`}
-        subtitle={`Browse similar high quality label ${label} just like '${product.name}'`}
+        title={`Similar ${label}`}
+        subtitle={`Browse similar high-quality ${label} just like '${product.name}'`}
       />
     </MaxWidthWrapper>
   );
