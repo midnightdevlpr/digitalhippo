@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { PRODUCT_CATEGORIES } from "@/config";
+import { PRODUCT_CATEGORIES } from "@/config/Index";
 import { useCart } from "@/hooks/use-cart";
 import { cn, formatPrice } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
@@ -23,7 +23,7 @@ const Page = () => {
       },
     });
 
-  const productIds = items.map(({ product }) => product.id);
+  const productsIds = items.map(({ product }) => product.id);
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
   useEffect(() => {
@@ -197,7 +197,7 @@ const Page = () => {
             <div className="mt-6">
               <Button
                 disabled={items.length === 0 || isLoading}
-                onClick={() => createCheckoutSession({ productIds })}
+                onClick={() => createCheckoutSession({ productsIds })}
                 className="w-full"
                 size="lg"
               >
