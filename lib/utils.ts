@@ -8,12 +8,12 @@ export function cn(...inputs: ClassValue[]) {
 export function formatPrice(
   price: number | string,
   options: {
-    currency?: "KES" | "USD" | "EUR" | "GBP" |"BDT",
-    // notation?: Intl.NumberFormatOptions["notation"]
+    currency?: "USD" | "EUR" | "GBP" |"BDT",
+    notation?: Intl.NumberFormatOptions["notation"]
   } = {}
 ) {
-    // const {currency = "KES", notation = "compact"} = options
-    const {currency = "KES"} = options
+    const {currency = "USD", notation = "compact"} = options
+    // const {currency = "KES"} = options
 
     const numericPrice = typeof price === "string" ? parseFloat(price) : price
 
