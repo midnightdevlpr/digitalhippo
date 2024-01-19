@@ -2,7 +2,7 @@
   "name": "digitalhippo",
   "version": "0.1.0",
   "private": true,
-   "main": "dist/server.js",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "cross-env PAYLOAD_CONFIG_PATH=payload.config.ts nodemon",
     "generate:types": "cross-env PAYLOAD_CONFIG_PATH=payload.config.ts payload generate:types",
@@ -13,9 +13,6 @@
     "start": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js NODE_ENV=production node dist/server.js",
     "copyfiles": "copyfiles -u 1 \"**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/",
     "lint": "next lint"
-  },
-  "resolutions": {
-    "cliui": "7.0.2"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -36,6 +33,7 @@
     "@trpc/server": "^10.44.1",
     "body-parser": "^1.20.2",
     "class-variance-authority": "^0.7.0",
+    "cliui": "^8.0.1",
     "clsx": "^2.0.0",
     "cross-env": "^7.0.3",
     "date-fns": "^2.30.0",
