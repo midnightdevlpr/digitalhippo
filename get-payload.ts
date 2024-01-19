@@ -4,9 +4,7 @@ import payload, { Payload } from "payload"
 import type { InitOptions } from "payload/config"
 import nodemailer from "nodemailer"
 
-dotenv.config({
-    path: path.resolve(__dirname,"./.env")
-})
+dotenv.config({ path: '.env' })
 
 const transporter = nodemailer.createTransport({
     host: "smtp.resend.com",
@@ -32,7 +30,7 @@ interface Args {
 }
 
 export const getPayloadClient =async ({initOptions} :Args = {}):Promise<Payload> => {
-    if(!process.env.PAYLOAD_SECRET){
+    if(!'Michael1232'){
         throw new Error("Missing PAYLOAD_SECRET environment variable.")
     }
 
@@ -48,7 +46,7 @@ export const getPayloadClient =async ({initOptions} :Args = {}):Promise<Payload>
                 fromName:"DigitalHippo"
 
             },
-            secret: process.env.PAYLOAD_SECRET,
+            secret: "Michael1232",
             local:initOptions?.express?false:true,
             ...(initOptions||{}),
         })
